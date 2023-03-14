@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5d03dfe1830943e392d8da35d3d75e7, type: 3}
+  m_Name: Grass Surface Footsteps
+  m_EditorClassIdentifier: 
+  <TerrainLayer>k__BackingField: {fileID: 8574412962073106934, guid: 70a911449962d47d28a46238576bfbc2, type: 2}
+  <Surface>k__BackingField: 0
+  <Footsteps>k__BackingField:
+  - {fileID: 8300000, guid: b4548d82733c04ce2a9f6bbdaec8bbcd, type: 3}
+  - {fileID: 8300000, guid: 36ce49a62e084481aa2c112b68105f99, type: 3}
+  - {fileID: 8300000, guid: c8ac7fddf708e4f0e9e8343b8fb4afc6, type: 3}
+  - {fileID: 8300000, guid: 3ef15657ab3e541f49258617cdc6fe39, type: 3}
+  <Jump>k__BackingField: []
+  <Land>k__BackingField: []
