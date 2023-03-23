@@ -12,26 +12,21 @@ public class TrashCounter : MonoBehaviour
 
     private void Awake()
     {
-        //TrashStash.OnPickup += UpdateCounter;
-
-        EventManager.AddListener<PickupEvent>(UpdateCounter);
+        TrashStash.OnInteract += UpdateCounter;
     }
 
     private void OnDestroy()
     {
-        //TrashStash.OnPickup -= UpdateCounter;
+        TrashStash.OnInteract -= UpdateCounter;
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        stash = FindObjectOfType<TrashStash>();
-        pickUpCount = stash.stash;
-        text.text = $"Trash in the stash: {pickUpCount}";
+        UpdateCounter(0);
     }
 
-    void UpdateCounter(PickupEvent evt) {
-        pickUpCount = stash.stash;
-        text.text = $"Trash in the stash: {pickUpCount}";
+    void UpdateCounter(int amount) {
+        text.text = $"Trash in the stash: {amount}";
     }
 }

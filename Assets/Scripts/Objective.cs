@@ -24,11 +24,6 @@ public abstract class Objective : MonoBehaviour
     protected virtual void Start()
     {
         OnObjectiveCreated?.Invoke(this);
-
-        DisplayMessageEvent displayMessage = Events.DisplayMessageEvent;
-        displayMessage.Message = Title;
-        displayMessage.DelayBeforeDisplay = 0.0f;
-        EventManager.Broadcast(displayMessage);
     }
 
     public void UpdateObjective(string descriptionText, string counterText, string notificationText)
@@ -53,6 +48,12 @@ public abstract class Objective : MonoBehaviour
         evt.NotificationText = notificationText;
         evt.IsComplete = IsCompleted;
         EventManager.Broadcast(evt);
+
+        OnObjectiveCompleted?.Invoke(this);
+    }
+
+    public void CompleteObjective() {
+        IsCompleted = true;
 
         OnObjectiveCompleted?.Invoke(this);
     }

@@ -20,7 +20,8 @@ public class PlayerInputHandler : MonoBehaviour
     private bool canRun;
 
     public float Sensitivity => sensitivityX;
-    public bool CanUseInput => Cursor.lockState == CursorLockMode.Locked && gameFlowManager.GameInProgress;
+    public bool CanUseInput => Cursor.lockState == CursorLockMode.Locked &&
+        gameFlowManager.gameState == GameFlowManager.GameState.InProgress; 
 
     private void Awake() {
         controls = new PlayerControls();

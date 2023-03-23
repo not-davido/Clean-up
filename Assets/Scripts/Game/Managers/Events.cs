@@ -13,6 +13,7 @@ public static class Events
     public static DisplayMessageEvent DisplayMessageEvent = new DisplayMessageEvent();
     public static GameStartEvent GameStartEvent = new();
     public static GameCompletedEvent GameCompletedEvent = new();
+    public static TrashDumpedEvent TrashDumpedEvent = new();
 }
 
 public class GameEvent { }
@@ -64,3 +65,7 @@ public class GameStartEvent : GameEvent {
 }
 
 public class GameCompletedEvent : GameEvent { }
+
+public class TrashDumpedEvent : GameEvent {
+    public int RemainingTrashCount;
+}

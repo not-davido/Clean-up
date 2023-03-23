@@ -9,9 +9,9 @@ public class Interaction : MonoBehaviour
     [SerializeField] private LayerMask interactableLayer;
     [SerializeField] private float interactionDistance = 2.5f;
 
+    private GameFlowManager manager;
     private TrashStash stash;
     private Transform cameraTransform;
-    private GameTimer gameTimer;
 
     public static event Action<string> OnLook;
     public static event Action OnAway;
@@ -19,7 +19,7 @@ public class Interaction : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gameTimer = FindObjectOfType<GameTimer>();
+        manager = FindObjectOfType<GameFlowManager>();
         stash = GetComponent<TrashStash>();
         cameraTransform = Camera.main.transform;
     }
@@ -27,7 +27,7 @@ public class Interaction : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (gameTimer.gameEnded) return;
+        if (manager.gameState != GameFlowManager.GameState.InProgress) return;
 
         if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out RaycastHit hit, interactionDistance, interactableLayer)) {
 

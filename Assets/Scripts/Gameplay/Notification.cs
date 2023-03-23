@@ -4,35 +4,39 @@ using UnityEngine;
 
 public class Notification : MonoBehaviour
 {
+    [SerializeField] private GameObject notificationObject;
+
     [SerializeField] private float delayBeforeFadingOut = 3;
     [SerializeField] private float fadeOut = 1;
 
-    [SerializeField] private GameObject notificationObject;
-
-    private CanvasGroup alpha;
+    private CanvasGroup canvas;
     private float timer;
 
     private void Awake()
     {
-        notificationObject.SetActive(false);
         var text = notificationObject.GetComponentInChildren<TMPro.TextMeshProUGUI>();
         text.text = string.Empty;
 
         EventManager.AddListener<DisplayMessageEvent>(Notify);
     }
 
+    private void OnDisable()
+    {
+        EventManager.RemoveListener<DisplayMessageEvent>(Notify);
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        alpha = notificationObject.GetComponent<CanvasGroup>();
+        canvas = notificationObject.GetComponent<CanvasGroup>();
     }
 
     // Update is called once per frame
     void Update()
     {
         if (notificationObject.activeInHierarchy) {
-            if (alpha.alpha > 0) {
-                alpha.alpha = 1 - (Time.time - timer) / fadeOut;
+            if (canvas.alpha > 0) {
+                canvas.alpha = 1 - (Time.time - timer) / fadeOut;
             } else {
                 notificationObject.SetActive(false);
             }
@@ -41,12 +45,12 @@ public class Notification : MonoBehaviour
 
     void Notify(DisplayMessageEvent evt) {
         notificationObject.SetActive(true);
+
         var text = notificationObject.GetComponentInChildren<TMPro.TextMeshProUGUI>();
         text.text = evt.Message;
 
         timer = Time.time + delayBeforeFadingOut;
 
-        alpha.alpha = 1 - (Time.time - timer) / fadeOut;
-
+        canvas.alpha = 1;
     }
 }

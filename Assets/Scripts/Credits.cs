@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class Credits : MonoBehaviour
 {
-    public void URL(string url) {
-        Application.OpenURL(url);
-    }
+    /// <summary>
+    /// The URL that credits the author.
+    /// </summary>
+    /// <param name="url">The webpage to redirect to.</param>
+    public void URL(string url) => Application.OpenURL(url);
 }

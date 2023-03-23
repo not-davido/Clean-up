@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class Trash : MonoBehaviour, IInteractable
 {
+    private void Awake()
+    {
+        var trashManager = FindObjectOfType<TrashManager>();
+        trashManager.Add();
+    }
+
     public void Interact()
     {
         TrashStash stash = FindObjectOfType<TrashStash>();

@@ -28,6 +28,7 @@ public class FirstPersonController : MonoBehaviour
 
     [Header("Crouch")]
     [SerializeField] private LayerMask crouchLayer;
+    [SerializeField][Range(0, 1)] private float crouchHeight = 0.5f;
     [SerializeField] private float crouchZoneOffset = 1f;
     [SerializeField] private float crouchRadius = 0.5f;
     [SerializeField] private float crouchSmoothTime = 0.3f;
@@ -160,9 +161,9 @@ public class FirstPersonController : MonoBehaviour
             }
         }
 
-        float targetHeight = IsCrouched ? originalControllerHeight / 2 : originalControllerHeight;
-        Vector3 targetCenter = IsCrouched ? originalControllerCenter / 2 : originalControllerCenter;
-        Vector3 targetCameraPosition = IsCrouched ? originalCameraPosition / 2 : originalCameraPosition;
+        float targetHeight = IsCrouched ? originalControllerHeight * crouchHeight : originalControllerHeight;
+        Vector3 targetCenter = IsCrouched ? originalControllerCenter * crouchHeight : originalControllerCenter;
+        Vector3 targetCameraPosition = IsCrouched ? originalCameraPosition * crouchHeight : originalCameraPosition;
 
         Controller.height = Mathf.SmoothDamp(Controller.height, targetHeight, ref crouchHeightVelocity, crouchSmoothTime);
         Controller.center = Vector3.SmoothDamp(Controller.center, targetCenter, ref crouchCenterVelocity, crouchSmoothTime);

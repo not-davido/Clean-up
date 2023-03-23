@@ -2,37 +2,44 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameTimer : MonoBehaviour
-{
-    [SerializeField] private TMPro.TextMeshProUGUI text;
+public class GameTimer : MonoBehaviour {
 
-    private bool timerStarted;
-    public bool gameEnded { get; set; }
+    [SerializeField]
+    private TMPro.TextMeshProUGUI text;
+
+    private bool startTimer;
+    private float timeElapsed;
+
     public float timer { get; private set; }
 
     private void Awake()
     {
-        EventManager.AddListener<GameStartEvent>(StartTimer);
+        GameFlowManager.OnGameStart += StartTimer;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (gameEnded) return;
+    float nextTime;
 
-        if (timerStarted) {
-            timer += Time.deltaTime;
+    // Update is called once per frame
+    void Update() {
+        if (!startTimer) return;
+
+        timer += Time.deltaTime;
+        timeElapsed += Time.deltaTime;
+
+        if (timeElapsed >= 1) {
             System.TimeSpan ts = System.TimeSpan.FromSeconds(timer);
-            //text.text = $"{ts.Minutes.ToString("00")}:{ts.Seconds.ToString("00")}";
-            text.text = string.Format("{0:00}:{1:00}", ts.Minutes, ts.Seconds);
+            //text.text = string.Format("{0:00}:{1:00}", ts.Minutes, ts.Seconds);
+            text.text = $"{ts.Minutes.ToString("00")}:{ts.Seconds.ToString("00")}";
+            timeElapsed %= 1;
         }
     }
 
-    void StartTimer(GameStartEvent evt) {
-        timerStarted = true;
+    public void StartTimer(bool value) {
+        startTimer = value;
     }
 
-    private void OnDestroy() {
-        EventManager.RemoveListener<GameStartEvent>(StartTimer);
+    private void OnDisable() {
+        GameFlowManager.OnGameStart -= StartTimer;
     }
 }
+

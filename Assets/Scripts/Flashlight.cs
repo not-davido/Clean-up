@@ -18,7 +18,7 @@ public class Flashlight : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!manager.GameInProgress) return;
+        if (manager.gameState != GameFlowManager.GameState.InProgress) return;
 
         if (Keyboard.current.fKey.wasPressedThisFrame) {
             _light.SetActive(!_light.activeInHierarchy);

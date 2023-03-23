@@ -7,9 +7,15 @@ public class TrashStash : MonoBehaviour
 {
     [SerializeField] private int maxAmountCanHold = 5;
 
-    public int stash;
+    private TrashManager trashManager;
+    private int stash;
 
-    public static event Action<int> OnThrowAway;
+    public static event Action<int> OnInteract;
+
+    private void Start()
+    {
+        trashManager = FindObjectOfType<TrashManager>();
+    }
 
     public void PickUp(GameObject trash) {
         if (stash >= maxAmountCanHold) {
@@ -21,7 +27,7 @@ public class TrashStash : MonoBehaviour
 
         stash++;
 
-        EventManager.Broadcast(Events.PickupEvent);
+        OnInteract?.Invoke(stash);
 
         Destroy(trash);
     }
@@ -34,10 +40,10 @@ public class TrashStash : MonoBehaviour
             return;
         }
 
-        OnThrowAway?.Invoke(stash);
+        trashManager.Remove(stash);
 
         stash = 0;
-        // This will update the trash text counter
-        EventManager.Broadcast(Events.PickupEvent);
+
+        OnInteract?.Invoke(stash);
     }
 }
